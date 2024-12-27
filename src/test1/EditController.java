@@ -48,13 +48,14 @@ public class EditController {
         try(BufferedReader br = new BufferedReader(new FileReader(filepath))){
             String line;
             br.readLine();//skip header
-            while((line = br.readLine())!=null){
+           while((line = br.readLine())!=null){
                 String[]column = line.split(",");
                 if(column[0].equals(currentEntry)){
                     titleField.setText(column[0]);
                     datePicker.setValue(convertStringToDate(column[1]));
                     moodSlider.setValue(Double.parseDouble(column[2]));
-                    contentField.setText(column[3]);
+                    content = column[3].replace("__NEWLINE__","\n");
+                    contentField.setText(content);
                     break;
                 }
             }
@@ -113,11 +114,6 @@ public class EditController {
         String content = contentField.getText();
         double mood = moodSlider.getValue();
 
-        if (filePath == null || filePath.isEmpty()) {
-            filePath = new File("D:/users/" + username + "/MyDiaryApp/entries.csv").getAbsolutePath();
-            return;
-        }
-
         File file = new File(filePath);
         boolean isModified = false;
 
@@ -157,7 +153,6 @@ public class EditController {
                 }
             }
 
-            // If the entry was not found, show an error and return
             if (!isModified) {
                 showAlert("Error", "Entry not found to update.", Alert.AlertType.ERROR);
                 return;
@@ -200,21 +195,22 @@ public class EditController {
     }
     
     private String escapeCSV(String input) {
+        input = input.replace("\n", "__NEWLINE__");
         if (input.contains(",") || input.contains("\n") || input.contains("\"")) {
-            input = input.replace("\"", "\"\""); 
-            input = "\"" + input + "\"";         
+            input = input.replace("\"", "\"\"");
+            input = "\"" + input + "\"";
         }
         return input;
     }
     
     private LocalDate convertStringToDate(String dateString) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         try {
             return LocalDate.parse(dateString);
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return null; 
         }
     }
+
 
 }
