@@ -110,13 +110,10 @@ public class CreateController {
         alert.showAndWait();
     }
     
-    private String escapeCSV(String input) {
-        if (input.contains(",")) {
-            input = input.replace(",", "");          
-        }else if(input.contains("\n")){
-            input = "\"" + input + "\"";   
-        }else if (input.contains("\"")){
-            input = input.replace("\"", "\"\"");
+     private String escapeCSV(String input) {
+        if (input.contains(",") || input.contains("\n") || input.contains("\"")) {
+            input = input.replace("\"", "\"\""); 
+            input = "\"" + input + "\"";         
         }
         return input;
     }
