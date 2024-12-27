@@ -50,14 +50,8 @@ public class CreateController {
         String content = contentField.getText();
         double mood = moodSlider.getValue();
         
-        if (filePath == null || filePath.isEmpty()) {
-            filePath = new File("D:/users/" + username + "/MyDiaryApp/entries.csv").getAbsolutePath();
-            return; 
-        }
-        
         File file = new File(filePath);
         boolean isNewFile = false;
-        
         
         String actualContent = escapeCSV(content);
         
@@ -110,10 +104,11 @@ public class CreateController {
         alert.showAndWait();
     }
     
-     private String escapeCSV(String input) {
+private String escapeCSV(String input) {
+        input = input.replace("\n", "__NEWLINE__");
         if (input.contains(",") || input.contains("\n") || input.contains("\"")) {
-            input = input.replace("\"", "\"\""); 
-            input = "\"" + input + "\"";         
+            input = input.replace("\"", "\"\"");
+            input = "\"" + input + "\"";
         }
         return input;
     }
