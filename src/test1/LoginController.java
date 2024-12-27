@@ -55,7 +55,6 @@ public class LoginController {
         if (authenticateUser(loginUserField.getText(), loginPasswordField.getText())) {
             showAlert("Success", "Login successful! Welcome back.",Alert.AlertType.INFORMATION);
             setUsername(loginUserField.getText());
-            //System.out.println(userName + " login");
             //切换去entries页面
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/test1/EntriesDisplay.fxml"));
