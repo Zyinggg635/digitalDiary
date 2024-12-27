@@ -35,7 +35,6 @@ public class EntriesController {
     public void setUsername(String username) {
         this.username = username;
         this.filePath = new File("D:/users/" + this.username + "/MyDiaryApp/entries.csv").getAbsolutePath();
-        //System.out.println("In setUsername " + this.username);
     }
     
     
@@ -79,12 +78,7 @@ public class EntriesController {
             }
     }
     
-    public void populate() {
-        //System.out.println("In populate " + this.username);
-        if (filePath == null || filePath.isEmpty()) {
-            filePath = new File("D:/users/" + username + "/MyDiaryApp/entries.csv").getAbsolutePath();
-        }
-        
+    public void populate() { 
         List<String> entries = getDiaryEntries();
         listView.getItems().addAll(entries); 
         
@@ -99,10 +93,7 @@ public class EntriesController {
     
     private List<String> getDiaryEntries() {
         List<String> entries = new ArrayList<>();
-        
-        //System.out.println("File Path: " + filePath);
-    
-        // Ensure the file exists
+
         File file = new File(filePath);
         if (!file.exists()) {
             showAlert("File: " + filePath);
