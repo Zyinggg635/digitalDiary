@@ -1,5 +1,3 @@
-//要在properties library add resources file（jar） 不要add错同名的file
-//然后clean n build
 package test1;
 
 import javafx.application.Application;
